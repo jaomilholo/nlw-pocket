@@ -1,67 +1,59 @@
-const { select } = require('@inquirer/prompts')
- 
+const { select, input } = require('@inquirer/prompts')
+
+let meta = {
+  value: 'Tomar 3L de água por dia',
+  checked: false,
+}
+let metas = [ meta ]
+
+const cadastrarMeta = async () => {
+  const meta = await input({message: 'Digite a meta:'})
+
+  if(meta.length == 0) {
+    console.log('A meta não pode ser vazia.')
+    return
+  }
+
+  metas.push({
+    value: meta, 
+    checked: false,
+  })
+}
+
 const start = async() => {
   while(true){
 
     const opcao = await select({
-      message: "Menu >",
+      message: 'Menu >',
       choices: [
         {
-          name: "Cadastrar meta",
-          value: "cadastrar"
+          name: 'Cadastrar meta',
+          value: 'cadastrar'
         },
         {
-          name: "Listar metas",
-          value: "listar"
+          name: 'Listar metas',
+          value: 'listar'
         },
         {
-          name: "Sair",
-          value: "sair"
+          name: 'Sair',
+          value: 'sair'
         },
       ]
     })
 
     switch(opcao) {
-      case "cadastrar":
-        console.log("vamos cadastrar")
+      case 'cadastrar':
+        await cadastrarMeta()
+        console.log(metas)
         break
-      case "listar":
-        console.log("vamos listar")
+      case 'listar':
+        console.log('vamos listar')
         break
-      case "sair":
-        console.log("Até a próxima!")
+      case 'sair':
+        console.log('Até a próxima!')
         return
     }
   }
 }
 start()
 
-// arrays, objetos
-// let metas = [2, "alô"] 
-// console.log(metas[1] + ", " +  metas[0])
-
-// let meta = {
-//   value: 'Ler um livro por mês',
-//   checked: false,
-// }
-// let metas = [
-//   meta,
-//   {
-//     value: "Caminhar 20 minutos todos os dias",
-//     checked: false,
-//   }
-// ]
-
-// console.log(metas[1].value)
-
-// function   // arrow function
-// const criarMeta = () => {}
-// function criarMeta() {}
-
-// olá, mundo
-// const mensagem = "olá eu"
-// {
-//   const mensagem = "olá, João!"
-//   console.log(mensagem);
-// }
-// console.log(mensagem);
